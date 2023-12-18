@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -74,7 +78,8 @@ fun AddEntryScreen(entryViewModel: EntryViewModel, categoryViewModel: CategoryVi
         ) {
              TextField(value = cost, onValueChange = { cost = it}
              , placeholder = { Text(text = "Введите сумму",
-                 modifier = Modifier.padding(start = 45.dp)
+                 modifier = Modifier
+                     .padding(start = 45.dp)
                      .fillMaxWidth()
              )
              })
@@ -94,16 +99,32 @@ fun AddEntryScreen(entryViewModel: EntryViewModel, categoryViewModel: CategoryVi
                     .fillMaxWidth(0.699f)) {
                     categoryViewModel.categories.forEach{
                         category ->
-                        DropdownMenuItem(text = { Text(category.name)}, onClick = {
-                            selectedCategory = category.name
-                            expanded = false
-                        })
+
+                            DropdownMenuItem(text = {
+                                Row {
+                                    Text(category.name)
+                                    IconButton(onClick = { categoryViewModel.removeCategory(category)
+                                    navController.navigate("/add-entry")})
+                                    { Icon(Icons.Rounded.Delete, contentDescription = null) }
+                                }
+                            }, onClick = {
+                                selectedCategory = category.name
+                                expanded = false
+                            })
+                    }
+                    TextButton(onClick = {
+                        expanded = false
+                        navController.navigate("/add-category")
+                    }) {
+                        Text(text = "Добавить категорию")
                     }
                 }
             }
-            Button(modifier = Modifier.fillMaxWidth()
-                .padding(top = 20.dp),
-                onClick = {
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp)
+                ,enabled = cost.isNotEmpty() && selectedCategory.isNotEmpty()
+                ,onClick = {
                     entryViewModel.addEntry(Entry(cost.toInt(), selectedCategory))
                     navController.navigate("/entries")
                 }
