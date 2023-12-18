@@ -34,7 +34,7 @@ import com.zove.money.EntryViewModel
 fun EntryListScreen(entryViewModel: EntryViewModel, navController: NavController){
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.LightGray)
+        .background(Color.DarkGray)
     , contentAlignment = Alignment.Center)
     {
         Column (
@@ -66,6 +66,13 @@ fun EntryListScreen(entryViewModel: EntryViewModel, navController: NavController
                     .fillMaxWidth()
                     ,onClick = { navController.navigate("/add-entry")}) {
                     Text(text = "Добавить запись")
+                }
+            }
+            Row(horizontalArrangement = Arrangement.Center) {
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    ,onClick = { navController.navigate("/stats")}) {
+                    Text(text = "Статистика рассходов")
                 }
             }
 

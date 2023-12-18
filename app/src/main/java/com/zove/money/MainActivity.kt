@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.zove.money.ui.screen.AddCategoryScreen
 import com.zove.money.ui.screen.AddEntryScreen
 import com.zove.money.ui.screen.EntryListScreen
+import com.zove.money.ui.screen.EntryStatisticsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,9 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("/add-category"){
                     AddCategoryScreen(categoryViewModel, navController)
+                }
+                composable("/stats"){
+                    EntryStatisticsScreen(categoryViewModel, entryViewModel, navController)
                 }
             }
             }
